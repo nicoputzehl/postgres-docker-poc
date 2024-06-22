@@ -1,0 +1,20 @@
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    environment:
+      - ENV_VAR=${ENV_VAR}
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    networks:
+      - dev_network
+      - test_network
+
+networks:
+  dev_network:
+    driver: bridge
+  test_network:
+    driver: bridge
