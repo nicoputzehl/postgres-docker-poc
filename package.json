@@ -2,6 +2,7 @@
   "devDependencies": {
     "@types/node": "^20.14.8",
     "@types/pg": "^8.11.6",
+    "concurrently": "^8.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2"
   },
@@ -10,10 +11,12 @@
     "pg": "^8.12.0"
   },
   "scripts": {
-    "init-db": "ts-node src/init.db.ts", 
-    "prepare": "./prepare.sh && npm run init-db",
+    "prepare": "./prepare.sh",
     "build": "tsc",
-    "start": "npm run prepare && ts-node src/index.ts && docker compose -f docker-compose.yml up -d",
-    "start:test": "npm run prepare && NODE_ENV=test ts-node src/index.ts && docker compose -f docker-compose.yml -f compose.testsetup.yml up -d"
-  }
+    "start": "yarn prepare && yarn docker:up && ts-node src/index.ts",
+    "start:test": "yarn prepare && yarn docker:up:test && NODE_ENV=test ts-node src/index.ts",
+    "docker:up": "docker compose -f docker-compose.yml up -d",
+    "docker:up:test": "docker compose -f docker-compose.yml -f compose.testsetup.yml up -d"
+  },
+  "license": "MIT"
 }

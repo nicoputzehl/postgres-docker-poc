@@ -7,14 +7,18 @@ services:
       - ENV_VAR=${ENV_VAR}
   db:
     image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
     env_file:
       - .env
-    networks:
-      - dev_network
-      - test_network
-
-networks:
-  dev_network:
-    driver: bridge
-  test_network:
-    driver: bridge
+    volumes:
+      - ps_data:/var/lib/postgresql/data
+volumes:
+  ps_data:
+    name: dev_postgres

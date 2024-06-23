@@ -1,4 +1,7 @@
 services:
-  db_service:
+  db:
     env_file:
       - .env.test
+volumes:
+  ps_data:
+    name: test_postgres
