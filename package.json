@@ -3,6 +3,7 @@
     "@types/node": "^20.14.8",
     "@types/pg": "^8.11.6",
     "concurrently": "^8.2.2",
+    "dotenv-cli": "^7.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2"
   },
@@ -16,7 +17,9 @@
     "start": "yarn prepare && yarn docker:up && ts-node src/index.ts",
     "start:test": "yarn prepare && yarn docker:up:test && NODE_ENV=test ts-node src/index.ts",
     "docker:up": "docker compose -f docker-compose.yml up -d",
-    "docker:up:test": "docker compose -f docker-compose.yml -f compose.testsetup.yml up -d"
+    "docker:up:test": "docker compose -f docker-compose.yml -f compose.testsetup.yml up -d",
+    "env:test": "ts-node test.ts",
+    "env:test:test": "NODE_ENV=test ts-node test.ts"
   },
   "license": "MIT"
 }
